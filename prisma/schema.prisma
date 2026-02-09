@@ -1,0 +1,155 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  idUser   Int     @id @default(autoincrement()) @map("id_user")
+  username String  @unique @db.VarChar(20)
+  password String  @db.VarChar(255)
+  level    UserLevel
+  jabatan  String  @db.VarChar(50)
+
+  @@map("user")
+}
+
+enum UserLevel {
+  user
+  admin
+}
+
+model JenisBarang {
+  idJenis   Int    @id @default(autoincrement()) @map("id_jenis")
+  jenisBrg  String @map("jenis_brg") @db.VarChar(255)
+
+  stokbarang Stokbarang[]
+
+  @@map("jenis_barang")
+}
+
+model Stokbarang {
+  idKodeBrg   Int    @id @default(autoincrement()) @map("id_kode_brg")
+  kodeBrg     String @unique @map("kode_brg") @db.VarChar(7)
+  idJenis     Int    @map("id_jenis")
+  namaBrg     String @map("nama_brg") @db.VarChar(50)
+  hargabarang String @db.VarChar(50)
+  satuan      String @db.VarChar(50)
+  stok        Int
+  keluar      Int    @default(0)
+  sisa        Int    @default(0)
+  keterangan  String @default("") @db.VarChar(50)
+
+  jenisBarang JenisBarang @relation(fields: [idJenis], references: [idJenis], onDelete: Restrict)
+  permintaan  Permintaan[]
+  pengajuan   Pengajuan[]
+  pengajuanSementara PengajuanSementara[]
+  sementara   Sementara[]
+  pemasukan   Pemasukan[]
+  pengeluaran Pengeluaran[]
+
+  @@map("stokbarang")
+}
+
+model Permintaan {
+  idPermintaan Int      @id @default(autoincrement()) @map("id_permintaan")
+  unit         String   @db.VarChar(20)
+  instansi     String   @db.VarChar(20)
+  kodeBrg      String   @map("kode_brg") @db.VarChar(7)
+  idJenis      Int      @map("id_jenis")
+  jumlah       Int
+  tglPermintaan DateTime @map("tgl_permintaan") @db.Date
+  status       Int      @default(0)
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("permintaan")
+  @@index([unit, tglPermintaan])
+  @@index([status])
+}
+
+model Sementara {
+  idSementara  Int      @id @default(autoincrement()) @map("id_sementara")
+  unit         String   @db.VarChar(50)
+  instansi     String   @db.VarChar(20)
+  kodeBrg      String   @map("kode_brg") @db.VarChar(7)
+  idJenis      Int      @map("id_jenis")
+  jumlah       Int
+  tglPermintaan DateTime @map("tgl_permintaan") @db.Date
+  status       Int      @default(0)
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("sementara")
+  @@index([unit, tglPermintaan])
+}
+
+model Pengajuan {
+  idPengajuan Int      @id @default(autoincrement()) @map("id_pengajuan")
+  unit        String   @db.VarChar(20)
+  kodeBrg     String   @map("kode_brg") @db.VarChar(7)
+  idJenis     Int      @map("id_jenis")
+  jumlah      Int
+  satuan      String   @db.VarChar(11)
+  hargabarang Float    @db.DoublePrecision
+  total       Float    @db.DoublePrecision
+  tglPengajuan DateTime @map("tgl_pengajuan") @db.Date
+  status      Int      @default(0)
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("pengajuan")
+  @@index([unit, tglPengajuan])
+  @@index([status])
+}
+
+model PengajuanSementara {
+  idPengajuanSementara Int      @id @default(autoincrement()) @map("id_pengajuan_sementara")
+  unit                 String   @db.VarChar(20)
+  kodeBrg              String   @map("kode_brg") @db.VarChar(7)
+  idJenis              Int      @map("id_jenis")
+  jumlah               Int
+  satuan               String   @db.VarChar(20)
+  hargabarang          Float    @db.DoublePrecision
+  total                Float    @db.DoublePrecision
+  tglPengajuan         DateTime @map("tgl_pengajuan") @db.Date
+  status               Int      @default(0)
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("pengajuan_sementara")
+  @@index([unit, tglPengajuan])
+}
+
+model Pemasukan {
+  id       Int      @id @default(autoincrement())
+  unit    String   @db.VarChar(30)
+  kodeBrg String   @map("kode_brg") @db.VarChar(7)
+  jumlah  Int
+  tglMasuk DateTime @map("tgl_masuk") @db.Date
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("pemasukan")
+  @@index([tglMasuk])
+  @@index([unit])
+}
+
+model Pengeluaran {
+  id       Int      @id @default(autoincrement())
+  unit    String   @db.VarChar(20)
+  kodeBrg String   @map("kode_brg") @db.VarChar(7)
+  jumlah  Int
+  tglKeluar DateTime @map("tgl_keluar") @db.Date
+
+  stokbarang Stokbarang @relation(fields: [kodeBrg], references: [kodeBrg])
+
+  @@map("pengeluaran")
+  @@index([tglKeluar])
+  @@index([unit])
+}
