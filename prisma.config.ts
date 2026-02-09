@@ -7,8 +7,12 @@ export default defineConfig({
   schema: "prisma/schema.prisma",
   migrations: {
     path: "prisma/migrations",
+    // Use our TypeScript seed script
+    seed: "tsx prisma/seed.ts",
   },
   datasource: {
-    url: process.env["DATABASE_URL"] || "postgresql://postgres:mokmok@localhost:5432/atk?schema=public",
+    url:
+      process.env["DATABASE_URL"] ||
+      "postgresql://postgres:mokmok@localhost:5432/atk?schema=public",
   },
 });
