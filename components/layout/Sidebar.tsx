@@ -174,8 +174,8 @@ export function AppSidebar({ userLevel }: SidebarProps) {
       : getUserBaseMenu(kategori)
 
   const handleLogout = async () => {
-    const callbackUrl = typeof window !== "undefined" ? `${window.location.origin}/login` : "/login"
-    await signOut({ callbackUrl })
+    // Use relative URL so it follows current host/port automatically
+    await signOut({ callbackUrl: "/login", redirect: true })
   }
 
   const toggleTheme = () => {
