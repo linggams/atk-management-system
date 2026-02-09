@@ -174,8 +174,16 @@ export function AppSidebar({ userLevel }: SidebarProps) {
       : getUserBaseMenu(kategori)
 
   const handleLogout = async () => {
-    // Use relative URL so it follows current host/port automatically
-    await signOut({ callbackUrl: "/login", redirect: true })
+    // Get current origin to ensure redirect to same host (IP server, not localhost)
+    const currentOrigin = typeof window !== "undefined" ? window.location.origin : ""
+    
+    // SignOut without automatic redirect, then manually redirect to maintain origin
+    await signOut({ redirect: false })
+    
+    // Force redirect to login using current origin (IP server)
+    if (typeof window !== "undefined") {
+      window.location.href = `${currentOrigin}/login`
+    }
   }
 
   const toggleTheme = () => {
