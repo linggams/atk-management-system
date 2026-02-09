@@ -1,19 +1,26 @@
 @echo off
 cd /d "%~dp0"
 
+echo ==========================================
+echo  ATK App - Build and Start (pnpm)
+echo ==========================================
+echo.
+
 echo Building app...
-pnpm build
+call pnpm build
 if errorlevel 1 (
-  echo Build failed. Press any key to exit.
-  pause >nul
-  exit /b 1
+  echo.
+  echo Build failed. See messages above.
+  goto end
 )
 
 echo.
 echo Starting app...
-pnpm start
-
+echo (Window will stay open after server stops.)
 echo.
-echo App has stopped. Press any key to exit.
-pause >nul
+call pnpm start
 
+:end
+echo.
+echo Done. Press any key to close this window.
+pause >nul
