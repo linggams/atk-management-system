@@ -12,13 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { SearchSelect } from "@/components/ui/search-select"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Input } from "@/components/ui/input"
@@ -303,53 +297,42 @@ export default function PengajuanPage() {
             <form onSubmit={handleAdd} className="space-y-4">
               <div className="grid gap-2">
                 <Label htmlFor="idJenis">Jenis Barang</Label>
-                <Select
+                <SearchSelect
                   value={formData.idJenis}
-                  onValueChange={(value) => {
+                  onSelect={(item) =>
                     setFormData({
-                      idJenis: value,
+                      idJenis: item.value,
                       kodeBrg: "",
                       jumlah: 0,
                       satuan: "",
                       hargabarang: "",
                     })
-                  }}
-                  required
-                >
-                  <SelectTrigger id="idJenis">
-                    <SelectValue placeholder="Pilih Jenis Barang" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {jenisBarang.map((jenis) => (
-                      <SelectItem key={jenis.idJenis} value={String(jenis.idJenis)}>
-                        {jenis.jenisBrg}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  }
+                  placeholder="Pilih Jenis Barang"
+                  items={jenisBarang.map((jenis) => ({
+                    id: String(jenis.idJenis),
+                    value: String(jenis.idJenis),
+                    label: jenis.jenisBrg,
+                  }))}
+                />
               </div>
 
               <div className="grid gap-2">
                 <Label htmlFor="kodeBrg">Nama Barang</Label>
-                <Select
+                <SearchSelect
                   value={formData.kodeBrg}
-                  onValueChange={(value) =>
-                    setFormData({ ...formData, kodeBrg: value })
+                  onSelect={(item) =>
+                    setFormData({ ...formData, kodeBrg: item.value })
                   }
-                  required
+                  placeholder="Pilih Nama Barang"
                   disabled={!formData.idJenis}
-                >
-                  <SelectTrigger id="kodeBrg">
-                    <SelectValue placeholder="Pilih Nama Barang" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {stokBarang.map((stok) => (
-                      <SelectItem key={stok.kodeBrg} value={stok.kodeBrg}>
-                        {stok.namaBrg}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  items={stokBarang.map((stok) => ({
+                    id: stok.kodeBrg,
+                    value: stok.kodeBrg,
+                    label: stok.namaBrg,
+                    searchableText: `${stok.namaBrg} ${stok.kodeBrg}`,
+                  }))}
+                />
               </div>
 
               <div className="grid gap-2">

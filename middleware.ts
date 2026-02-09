@@ -24,8 +24,8 @@ export async function middleware(request: NextRequest) {
 
   // Check role-based access (support legacy tokens: bendahara->admin, instansi->user)
   let userLevel = token.level as string
-  if (userLevel === "bendahara") userLevel = "admin"
-  if (userLevel === "instansi") userLevel = "user"
+  if (userLevel === "admin") userLevel = "admin"
+  if (userLevel === "user") userLevel = "user"
 
   const isAdminRoute = pathname.startsWith("/admin")
   const isUserRoute = pathname.startsWith("/user")

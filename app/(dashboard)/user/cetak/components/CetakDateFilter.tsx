@@ -3,8 +3,14 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { FileText, Download } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { FileText } from "lucide-react"
 
 interface CetakDateFilterProps {
   selectedDate: string
@@ -47,7 +53,6 @@ export function CetakDateFilter({
             </Button>
             {hasData && (
               <Button variant="outline" onClick={onExportAll}>
-                <Download className="mr-2 h-4 w-4" />
                 Export
               </Button>
             )}

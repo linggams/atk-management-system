@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
-import { Plus, Loader2 } from "lucide-react"
+import { Loader2 } from "lucide-react"
 import type { KategoriFormData } from "../types"
 
 interface AddKategoriDialogProps {
@@ -48,12 +48,7 @@ export function AddKategoriDialog({ onSubmit, children }: AddKategoriDialogProps
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {children ?? (
-          <Button onClick={handleOpen}>
-            <Plus className="mr-2 h-4 w-4" />
-            Tambah Kategori
-          </Button>
-        )}
+        {children ?? <Button onClick={handleOpen}>Tambah Kategori</Button>}
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

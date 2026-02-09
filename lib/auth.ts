@@ -100,8 +100,8 @@ export const authOptions: NextAuthConfig = {
         session.user.username = token.username as string
         // Normalize legacy levels: bendahara->admin, instansi->user
         let level = token.level as string
-        if (level === "bendahara") level = "admin"
-        if (level === "instansi") level = "user"
+        if (level === "admin") level = "admin"
+        if (level === "user") level = "user"
         session.user.level = level
         session.user.jabatan = token.jabatan as string
       }

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Download } from "lucide-react"
 
 interface LaporanTabCardProps {
   title: string
@@ -37,7 +36,6 @@ export function LaporanTabCard({
         <CardTitle>{title}</CardTitle>
         {hasData && (
           <Button variant="outline" size="sm" onClick={onExport}>
-            <Download className="mr-2 h-4 w-4" />
             Ekspor
           </Button>
         )}

@@ -151,7 +151,7 @@ export default function LaporanPage() {
                 </TableHeader>
                 <TableBody>
                   {data.map((item: Record<string, unknown>, index: number) => (
-                    <TableRow key={item.id ?? `pemasukan-${index}`}>
+                    <TableRow key={`pemasukan-${index}`}>
                       <TableCell className="text-muted-foreground">{formatDate(String(item.tglMasuk ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>
@@ -183,7 +183,7 @@ export default function LaporanPage() {
                 </TableHeader>
                 <TableBody>
                   {data.map((item: Record<string, unknown>, index: number) => (
-                    <TableRow key={item.id ?? `pengeluaran-${index}`}>
+                    <TableRow key={`pengeluaran-${index}`}>
                       <TableCell className="text-muted-foreground">{formatDate(String(item.tglKeluar ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>

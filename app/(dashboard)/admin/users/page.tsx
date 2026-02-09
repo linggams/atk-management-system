@@ -3,9 +3,8 @@
 import { useState } from "react"
 import { DashboardLayout } from "@/components/layout/DashboardLayout"
 import { Button } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Plus } from "lucide-react"
 import { useUsers } from "./hooks/useUsers"
 import {
   UsersTable,
@@ -69,10 +68,7 @@ export default function UsersPage() {
               Kelola data pengguna sistem
             </p>
           </div>
-          <Button onClick={handleAddClick}>
-            <Plus className="mr-2 h-4 w-4" />
-            Tambah User
-          </Button>
+          <Button onClick={handleAddClick}>Tambah User</Button>
         </div>
 
         <UserFormDialog
@@ -83,13 +79,15 @@ export default function UsersPage() {
         />
 
         <Card>
-          <div className="rounded-md border">
-            <UsersTable
-              data={users}
-              onEdit={handleEditClick}
-              onDelete={handleDeleteClick}
-            />
-          </div>
+          <CardContent>
+            <div className="rounded-md border">
+              <UsersTable
+                data={users}
+                onEdit={handleEditClick}
+                onDelete={handleDeleteClick}
+              />
+            </div>
+          </CardContent>
         </Card>
 
         <DeleteUserDialog

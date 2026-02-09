@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { DashboardLayout } from "@/components/layout/DashboardLayout"
-import { Card } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
 import { useKategori } from "./hooks/useKategori"
 import {
@@ -59,9 +59,11 @@ export default function KategoriPage() {
         </div>
 
         <Card>
-          <div className="rounded-md border">
-            <KategoriTable data={kategori} onDelete={handleDeleteClick} />
-          </div>
+          <CardContent>
+            <div className="rounded-md border">
+              <KategoriTable data={kategori} onDelete={handleDeleteClick} />
+            </div>
+          </CardContent>
         </Card>
 
         <DeleteKategoriDialog

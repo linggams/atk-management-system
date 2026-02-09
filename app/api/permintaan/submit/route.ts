@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
       const permintaan = await prisma.permintaan.create({
         data: {
           unit: item.unit,
-          instansi: item.instansi,
+          user: item.user,
           kodeBrg: item.kodeBrg,
           idJenis: item.idJenis,
           jumlah: item.jumlah,

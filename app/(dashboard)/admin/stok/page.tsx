@@ -5,7 +5,7 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"
-import { Plus, Download, Printer } from "lucide-react"
+import { Download, Printer } from "lucide-react"
 import { useStok } from "./hooks/useStok"
 import { StokTable, StokFormDialog, DeleteStokDialog } from "./components"
 import type { StokBarang } from "./types"
@@ -53,7 +53,9 @@ export default function StokPage() {
       }
     `
     document.head.appendChild(style)
-    return () => document.head.removeChild(style)
+    return () => {
+      document.head.removeChild(style)
+    }
   }, [])
 
   if (loading) {
@@ -115,13 +117,9 @@ export default function StokPage() {
               onClick={downloadPDF}
               disabled={stokBarang.length === 0}
             >
-              <Download className="mr-2 h-4 w-4" />
               Export
             </Button>
-            <Button onClick={handleAddClick}>
-              <Plus className="mr-2 h-4 w-4" />
-              Tambah Stok Barang
-            </Button>
+            <Button onClick={handleAddClick}>Tambah Stok Barang</Button>
           </div>
         </div>
 

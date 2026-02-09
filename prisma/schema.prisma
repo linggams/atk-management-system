@@ -59,7 +59,7 @@ model Stokbarang {
 model Permintaan {
   idPermintaan Int      @id @default(autoincrement()) @map("id_permintaan")
   unit         String   @db.VarChar(20)
-  instansi     String   @db.VarChar(20)
+  user     String   @db.VarChar(20)
   kodeBrg      String   @map("kode_brg") @db.VarChar(7)
   idJenis      Int      @map("id_jenis")
   jumlah       Int
@@ -76,7 +76,7 @@ model Permintaan {
 model Sementara {
   idSementara  Int      @id @default(autoincrement()) @map("id_sementara")
   unit         String   @db.VarChar(50)
-  instansi     String   @db.VarChar(20)
+  user     String   @db.VarChar(20)
   kodeBrg      String   @map("kode_brg") @db.VarChar(7)
   idJenis      Int      @map("id_jenis")
   jumlah       Int

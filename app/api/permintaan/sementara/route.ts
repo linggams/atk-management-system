@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
     const sementara = await prisma.sementara.create({
       data: {
         unit: validatedData.unit,
-        instansi: validatedData.instansi,
+        user: validatedData.instansi,
         kodeBrg: validatedData.kodeBrg,
         idJenis: validatedData.idJenis,
         jumlah: validatedData.jumlah,

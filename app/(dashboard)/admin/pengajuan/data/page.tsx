@@ -13,13 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { Badge } from "@/components/ui/badge"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { SearchSelect } from "@/components/ui/search-select"
 import { Button } from "@/components/ui/button"
 import { Loader2, Eye, Printer, Download } from "lucide-react"
 import { toast } from "sonner"
@@ -208,7 +202,7 @@ export default function DataPengajuanPage() {
   return (
     <DashboardLayout>
       <div className="space-y-6">
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center gap-4 flex-wrap">
           <div>
             <h1 className="text-3xl font-bold text-foreground">
               Data Pengajuan Barang
@@ -217,17 +211,18 @@ export default function DataPengajuanPage() {
               Lihat semua data pengajuan barang
             </p>
           </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Filter Status" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Semua Status</SelectItem>
-              <SelectItem value="0">Pending</SelectItem>
-              <SelectItem value="1">Disetujui</SelectItem>
-              <SelectItem value="2">Ditolak</SelectItem>
-            </SelectContent>
-          </Select>
+          <SearchSelect
+            value={statusFilter}
+            onSelect={(item) => setStatusFilter(item.value)}
+            placeholder="Filter Status"
+            size="sm"
+            items={[
+              { id: "all", value: "all", label: "Semua Status" },
+              { id: "0", value: "0", label: "Pending" },
+              { id: "1", value: "1", label: "Disetujui" },
+              { id: "2", value: "2", label: "Ditolak" },
+            ]}
+          />
         </div>
 
         {loading ? (

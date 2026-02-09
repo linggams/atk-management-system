@@ -8,6 +8,8 @@ if (!process.env.NEXTAUTH_SECRET) {
 const handler = NextAuth({
   ...authOptions,
   secret: process.env.NEXTAUTH_SECRET,
+  // Allow this host in Auth.js v5 (fixes UntrustedHost in dev/prod)
+  trustHost: true,
 })
 
 export const { auth, signIn, signOut } = handler

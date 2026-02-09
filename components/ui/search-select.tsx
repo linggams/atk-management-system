@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as PopoverPrimitive from "@radix-ui/react-popover"
 import { Check, ChevronsUpDown } from "lucide-react"
-import { cn } from "@repo/ui/lib/utils"
+import { cn } from "@/lib/utils"
 
 export interface SearchSelectItem {
   id: string

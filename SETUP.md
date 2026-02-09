@@ -8,11 +8,12 @@
 ## Setup Steps
 
 ### 1. Environment Variables
-Buat file `.env` di root project dengan isi:
+Buat file `.env` di root project dengan isi (silakan sesuaikan `username`, `password`, dan nama database jika berbeda):
 
 ```env
 # Database
-DATABASE_URL="postgresql://username:password@localhost:5432/dasanpac?schema=public"
+# Default menggunakan database `atk`, silakan sesuaikan username/password jika perlu
+DATABASE_URL="postgresql://postgres:password@localhost:5432/atk?schema=public"
 
 # NextAuth
 NEXTAUTH_SECRET="generate-random-secret-here"
@@ -28,11 +29,11 @@ openssl rand -base64 32
 
 #### Option A: Create New Database
 ```sql
-CREATE DATABASE dasanpac;
+CREATE DATABASE atk;
 ```
 
-#### Option B: Migrate from MySQL
-Jika Anda ingin migrate data dari MySQL ke PostgreSQL:
+#### Option B: Migrate from MySQL (database lama)
+Jika Anda ingin migrate data dari MySQL lama ke PostgreSQL:
 1. Export data dari MySQL
 2. Import ke PostgreSQL (perlu konversi format)
 3. Atau gunakan tool migration seperti `pgloader`
@@ -50,6 +51,14 @@ npx prisma migrate dev --name init
 npx prisma db push
 ```
 
+### 3b. Seed Database (User Awal)
+
+Setelah struktur database siap, jalankan seed untuk mengisi user awal (lihat `prisma/seed.ts`):
+
+```bash
+npx prisma db seed
+```
+
 ### 4. Install Dependencies (jika belum)
 
 ```bash
@@ -63,6 +72,8 @@ pnpm dev
 ```
 
 Aplikasi akan berjalan di `http://localhost:3000`
+
+> Catatan: Untuk menjalankan aplikasi build di Windows, Anda juga bisa menggunakan script `run-app.bat` yang akan melakukan `pnpm build` lalu `pnpm start`.
 
 ## Database Schema Notes
 

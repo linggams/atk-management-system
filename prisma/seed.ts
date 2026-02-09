@@ -19,21 +19,6 @@ async function main() {
   console.log('🌱 Starting seed...')
   console.log('📡 DATABASE_URL:', process.env.DATABASE_URL?.replace(/:[^:@]+@/, ':****@') || 'NOT SET')
 
-  // Seed JenisBarang
-  console.log('📦 Seeding JenisBarang...')
-  await prisma.jenisBarang.createMany({
-    data: [
-      { jenisBrg: 'ATK' },
-      { jenisBrg: 'ALAT KEBERSIHAN' },
-      { jenisBrg: 'PERLENGKAPAN LAINNYA' },
-      { jenisBrg: 'AUTOCAM' },
-      { jenisBrg: 'CUTTING' },
-      { jenisBrg: 'QC' },
-      { jenisBrg: 'PERCETAKAN' },
-    ],
-    skipDuplicates: true,
-  })
-
   // Seed User
   console.log('👤 Seeding User...')
   const users = [

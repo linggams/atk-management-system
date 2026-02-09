@@ -1,45 +1,18 @@
 import { DashboardLayout } from "@/components/layout/DashboardLayout"
-import { Card } from "@/components/ui/card"
 
 export default function AdminDashboardPage() {
   return (
     <DashboardLayout>
-      <div className="space-y-6">
+      <div className="space-y-6 flex flex-1 flex-col items-center justify-center text-center text-muted-foreground">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Dashboard
-          </h1>
+          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Selamat datang di dashboard Admin
           </p>
         </div>
-
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card className="p-6">
-            <div className="text-sm font-medium text-muted-foreground">
-              Total User
-            </div>
-            <div className="mt-2 text-2xl font-bold">-</div>
-          </Card>
-          <Card className="p-6">
-            <div className="text-sm font-medium text-muted-foreground">
-              Total Stok Barang
-            </div>
-            <div className="mt-2 text-2xl font-bold">-</div>
-          </Card>
-          <Card className="p-6">
-            <div className="text-sm font-medium text-muted-foreground">
-              Permintaan Pending
-            </div>
-            <div className="mt-2 text-2xl font-bold">-</div>
-          </Card>
-          <Card className="p-6">
-            <div className="text-sm font-medium text-muted-foreground">
-              Pengajuan Pending
-            </div>
-            <div className="mt-2 text-2xl font-bold">-</div>
-          </Card>
-        </div>
+        <p className="mt-8 text-sm">
+          Placeholder dashboard. Statistik dan ringkasan akan ditampilkan di sini nanti.
+        </p>
       </div>
     </DashboardLayout>
   )
