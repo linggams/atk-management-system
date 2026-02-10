@@ -115,13 +115,20 @@ export function useStok() {
   }
 
   const downloadPDF = async () => {
-    const elementId = "pdf-stok-content"
-    const el = document.getElementById(elementId)
+    // Sembunyikan elemen yang tidak perlu di PDF (kolom Aksi) dengan class pdf-hidden
+    let pdfStyle: HTMLStyleElement | null = null
     try {
-      el?.classList.add("pdf-exporting")
-      await new Promise((r) => requestAnimationFrame(r))
+      pdfStyle = document.createElement("style")
+      pdfStyle.id = "pdf-hidden-style"
+      pdfStyle.textContent = ".pdf-hidden{display:none !important;}"
+      document.head.appendChild(pdfStyle)
+
+      const elementId = "pdf-stok-content"
       const jenisName = getJenisName(parseInt(jenisParam))
-      const filename = `Laporan_Stok_${jenisName}_${new Date().toISOString().split("T")[0]}.pdf`
+      const filename = `Laporan_Stok_${jenisName}_${new Date()
+        .toISOString()
+        .split("T")[0]}.pdf`
+
       await generatePDF(elementId, filename, {
         format: "a4",
         orientation: "portrait",
@@ -132,7 +139,9 @@ export function useStok() {
       console.error("Error generating PDF:", error)
       toast.error("Gagal mengunduh PDF")
     } finally {
-      el?.classList.remove("pdf-exporting")
+      if (pdfStyle && document.head.contains(pdfStyle)) {
+        document.head.removeChild(pdfStyle)
+      }
     }
   }
 

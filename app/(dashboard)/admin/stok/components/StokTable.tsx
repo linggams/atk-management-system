@@ -32,7 +32,8 @@ export function StokTable({ data, onEdit, onDelete }: StokTableProps) {
           <TableHead>Stok</TableHead>
           <TableHead>Keluar</TableHead>
           <TableHead>Sisa</TableHead>
-          <TableHead className="text-right">Aksi</TableHead>
+          {/* Kolom aksi tetap tampil di UI, disembunyikan saat export PDF */}
+          <TableHead className="text-right pdf-hidden">Aksi</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -63,7 +64,8 @@ export function StokTable({ data, onEdit, onDelete }: StokTableProps) {
               >
                 {stok.sisa}
               </TableCell>
-              <TableCell className="text-right">
+              {/* Tombol aksi disembunyikan saat export PDF dengan class pdf-hidden */}
+              <TableCell className="text-right pdf-hidden">
                 <div className="flex justify-end gap-2">
                   <Button
                     variant="ghost"
