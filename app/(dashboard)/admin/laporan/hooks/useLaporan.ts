@@ -151,8 +151,8 @@ export function useLaporan() {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const docDefinition: any = {
         pageSize: "A4",
-        // Tetap landscape seperti sebelumnya agar kolom banyak tetap terbaca
-        pageOrientation: "landscape",
+        // Gunakan orientasi portrait untuk semua laporan
+        pageOrientation: "portrait",
         pageMargins: [30, 50, 30, 30],
         content: [
           { text: "PT DASAN PAN PACIFIC INDONESIA", style: "header", alignment: "center" },
