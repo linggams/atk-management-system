@@ -181,22 +181,6 @@ export function StokFormDialog({
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="stok">Stok Awal</Label>
-              <Input
-                id="stok"
-                type="number"
-                value={formData.stok}
-                onChange={(e) =>
-                  setFormData({
-                    ...formData,
-                    stok: parseInt(e.target.value) || 0,
-                  })
-                }
-                required
-                min="0"
-              />
-            </div>
-            <div className="grid gap-2">
               <Label htmlFor="keterangan">Keterangan</Label>
               <Input
                 id="keterangan"
