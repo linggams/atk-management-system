@@ -1,0 +1,10 @@
+<service>
+  <id>atk-app</id>
+  <name>ATK App</name>
+  <description>Next.js ATK app - port 2000</description>
+  <executable>C:\Windows\System32\cmd.exe</executable>
+  <arguments>/c "C:\next\atk\start-app.bat"</arguments>
+  <workingdirectory>C:\next\atk</workingdirectory>
+  <logpath>C:\next\atk\logs</logpath>
+  <log mode="roll"></log>
+</service>
