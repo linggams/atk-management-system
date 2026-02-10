@@ -282,7 +282,7 @@ export default function PengajuanPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-2xl font-bold text-foreground">
             Form Pengajuan Barang
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -434,15 +434,40 @@ export default function PengajuanPage() {
             ) : (
               <div className="space-y-2">
                 <div className="rounded-md border overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Aksi</TableHead> </TableRow> </TableHeader> <TableBody> {sementaraList.map((item) => ( <TableRow key={item.idPengajuanSementara}> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.satuan}</TableCell> <TableCell>{formatRupiah(item.hargabarang)}</TableCell> <TableCell>{formatRupiah(item.total)}</TableCell> <TableCell> <Button variant="ghost" size="icon" onClick={() => handleDelete(item.idPengajuanSementara) } > <Trash2 />
-                          </Button>
-                        </TableCell>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nama Barang</TableHead>
+                        <TableHead>Jumlah</TableHead>
+                        <TableHead>Satuan</TableHead>
+                        <TableHead>Harga</TableHead>
+                        <TableHead>Total</TableHead>
+                        <TableHead>Aksi</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {sementaraList.map((item) => (
+                        <TableRow key={item.idPengajuanSementara}>
+                          <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                          <TableCell>{item.jumlah}</TableCell>
+                          <TableCell>{item.satuan}</TableCell>
+                          <TableCell>{formatRupiah(item.hargabarang)}</TableCell>
+                          <TableCell>{formatRupiah(item.total)}</TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() =>
+                                handleDelete(item.idPengajuanSementara)
+                              }
+                            >
+                              <Trash2 />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
                 <div className="mt-4 p-4 bg-muted rounded-md">
                   <div className="flex justify-between">

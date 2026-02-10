@@ -192,9 +192,9 @@ export function AppSidebar({ userLevel }: SidebarProps) {
 
   return (
     <Sidebar collapsible="offcanvas">
-      <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex h-14 items-center px-2">
-          <h1 className="text-xl font-bold text-sidebar-foreground">PT DASAN</h1>
+      <SidebarHeader className="h-16 border-b border-border">
+        <div className="flex h-full items-center px-2">
+          <h1 className="text-xl font-bold text-foreground">PT DASAN</h1>
         </div>
       </SidebarHeader>
       <SidebarContent>

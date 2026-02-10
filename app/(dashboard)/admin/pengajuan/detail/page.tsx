@@ -206,7 +206,7 @@ export default function DetailPengajuanPage() {
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </Button>
-              <h1 className="text-3xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-foreground">
                 Detail Pengajuan Barang
               </h1>
             </div>
@@ -251,54 +251,62 @@ export default function DetailPengajuanPage() {
           <>
             <Card>
               <div className="rounded-md border overflow-hidden">
-              <Table>
-                <TableHeader>
-                  <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Status</TableHead> <TableHead>Aksi</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {pengajuan.map((item, index) => (
-                    <TableRow key={item.idPengajuan}> <TableCell>{index + 1}</TableCell> <TableCell>
-                        {item.stokbarang.namaBrg}
-                      </TableCell>
-                      <TableCell>{item.jumlah}</TableCell>
-                      <TableCell>{item.satuan}</TableCell>
-                      <TableCell>{formatRupiah(item.hargabarang)}</TableCell>
-                      <TableCell>{formatRupiah(item.total)}</TableCell>
-                      <TableCell>
-                        <Badge variant="outline">Pending</Badge>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex justify-end gap-2">
-                          <Button
-                            size="sm"
-                            onClick={() => handleApproveClick(item)}
-                            disabled={processing !== null}
-                          >
-                            {processing === item.idPengajuan ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <Check className="h-4 w-4" />
-                            )}
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="destructive"
-                            onClick={() => handleRejectClick(item)}
-                            disabled={processing !== null}
-                          >
-                            {processing === item.idPengajuan ? (
-                              <Loader2 className="h-4 w-4 animate-spin" />
-                            ) : (
-                              <X className="h-4 w-4" />
-                            )}
-                          </Button>
-                        </div>
-                      </TableCell>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>No</TableHead>
+                      <TableHead>Nama Barang</TableHead>
+                      <TableHead>Jumlah</TableHead>
+                      <TableHead>Satuan</TableHead>
+                      <TableHead>Harga</TableHead>
+                      <TableHead>Total</TableHead>
+                      <TableHead>Status</TableHead>
+                      <TableHead>Aksi</TableHead>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                  </TableHeader>
+                  <TableBody>
+                    {pengajuan.map((item, index) => (
+                      <TableRow key={item.idPengajuan}>
+                        <TableCell>{index + 1}</TableCell>
+                        <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                        <TableCell>{item.jumlah}</TableCell>
+                        <TableCell>{item.satuan}</TableCell>
+                        <TableCell>{formatRupiah(item.hargabarang)}</TableCell>
+                        <TableCell>{formatRupiah(item.total)}</TableCell>
+                        <TableCell>
+                          <Badge variant="outline">Pending</Badge>
+                        </TableCell>
+                        <TableCell className="text-right">
+                          <div className="flex justify-end gap-2">
+                            <Button
+                              size="sm"
+                              onClick={() => handleApproveClick(item)}
+                              disabled={processing !== null}
+                            >
+                              {processing === item.idPengajuan ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <Check className="h-4 w-4" />
+                              )}
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="destructive"
+                              onClick={() => handleRejectClick(item)}
+                              disabled={processing !== null}
+                            >
+                              {processing === item.idPengajuan ? (
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                              ) : (
+                                <X className="h-4 w-4" />
+                              )}
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </Card>
             <Card className="p-4">

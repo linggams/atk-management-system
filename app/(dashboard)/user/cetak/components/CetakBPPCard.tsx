@@ -94,7 +94,8 @@ export function CetakBPPCard({
 
             <Table>
               <TableHeader>
-                <TableRow> <TableHead>No</TableHead>
+                <TableRow>
+                  <TableHead>No</TableHead>
                   <TableHead>Nama Barang</TableHead>
                   <TableHead className="text-center">Jumlah</TableHead>
                   <TableHead className="text-center">Satuan</TableHead>
@@ -102,7 +103,12 @@ export function CetakBPPCard({
               </TableHeader>
               <TableBody>
                 {items.map((item, index) => (
-                  <TableRow key={item.idPermintaan}> <TableCell>{index + 1}</TableCell> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell>
+                  <TableRow key={item.idPermintaan}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                    <TableCell className="text-center">
+                      {item.jumlah}
+                    </TableCell>
                     <TableCell className="text-center">
                       {item.stokbarang.satuan}
                     </TableCell>

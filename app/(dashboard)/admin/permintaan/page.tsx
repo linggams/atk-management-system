@@ -98,7 +98,7 @@ export default function PermintaanPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-2xl font-bold text-foreground">
             Data Permintaan Barang
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -148,15 +148,28 @@ export default function PermintaanPage() {
                   </Button>
                 </div>
                 <div className="rounded-md border overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Stok Tersedia</TableHead> </TableRow> </TableHeader> <TableBody> {group.items.map((item, idx) => ( <TableRow key={item.idPermintaan}> <TableCell>{idx + 1}</TableCell> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.stokbarang.satuan}</TableCell> <TableCell >
-                          {item.stokbarang.sisa}
-                        </TableCell>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>No</TableHead>
+                        <TableHead>Nama Barang</TableHead>
+                        <TableHead>Jumlah</TableHead>
+                        <TableHead>Satuan</TableHead>
+                        <TableHead>Stok Tersedia</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {group.items.map((item, idx) => (
+                        <TableRow key={item.idPermintaan}>
+                          <TableCell>{idx + 1}</TableCell>
+                          <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                          <TableCell>{item.jumlah}</TableCell>
+                          <TableCell>{item.stokbarang.satuan}</TableCell>
+                          <TableCell>{item.stokbarang.sisa}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
               </Card>
             ))}

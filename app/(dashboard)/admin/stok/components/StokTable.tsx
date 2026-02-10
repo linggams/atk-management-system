@@ -23,18 +23,29 @@ export function StokTable({ data, onEdit, onDelete }: StokTableProps) {
   return (
     <Table>
       <TableHeader>
-        <TableRow> <TableHead>No</TableHead> <TableHead>Kode Barang</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Harga</TableHead> <TableHead>Satuan</TableHead> <TableHead>Stok</TableHead> <TableHead>Keluar</TableHead> <TableHead>Sisa</TableHead> {/* Kolom aksi tetap tampil di UI, disembunyikan saat export PDF */} <TableHead>Aksi</TableHead>
+        <TableRow>
+          <TableHead>No</TableHead>
+          <TableHead>Kode Barang</TableHead>
+          <TableHead>Nama Barang</TableHead>
+          <TableHead>Harga</TableHead>
+          <TableHead>Satuan</TableHead>
+          <TableHead>Stok</TableHead>
+          <TableHead>Keluar</TableHead>
+          <TableHead>Sisa</TableHead>
+          {/* Kolom aksi tetap tampil di UI, disembunyikan saat export PDF */}
+          <TableHead>Aksi</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.length === 0 ? (
-          <TableRow> <TableCell colSpan={9}>
-              Tidak ada data stok barang
-            </TableCell>
+          <TableRow>
+            <TableCell colSpan={9}>Tidak ada data stok barang</TableCell>
           </TableRow>
         ) : (
           data.map((stok, index) => (
-            <TableRow key={stok.idKodeBrg}> <TableCell>{index + 1}</TableCell> <TableCell>{stok.kodeBrg}</TableCell>
+            <TableRow key={stok.idKodeBrg}>
+              <TableCell>{index + 1}</TableCell>
+              <TableCell>{stok.kodeBrg}</TableCell>
               <TableCell>{stok.namaBrg}</TableCell>
               <TableCell>{formatRupiah(stok.hargabarang)}</TableCell>
               <TableCell>{stok.satuan}</TableCell>

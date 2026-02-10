@@ -244,7 +244,7 @@ export default function PermintaanPage() {
     <DashboardLayout>
       <div className="space-y-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">
+          <h1 className="text-2xl font-bold text-foreground">
             Form Permintaan Barang
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
@@ -370,15 +370,34 @@ export default function PermintaanPage() {
             ) : (
               <div className="space-y-2">
                 <div className="rounded-md border overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Aksi</TableHead> </TableRow> </TableHeader> <TableBody> {sementaraList.map((item) => ( <TableRow key={item.idSementara}> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.stokbarang.satuan}</TableCell> <TableCell> <Button variant="ghost" size="icon" onClick={() => handleDelete(item.idSementara)} > <Trash2 />
-                          </Button>
-                        </TableCell>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nama Barang</TableHead>
+                        <TableHead>Jumlah</TableHead>
+                        <TableHead>Satuan</TableHead>
+                        <TableHead>Aksi</TableHead>
                       </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
+                    </TableHeader>
+                    <TableBody>
+                      {sementaraList.map((item) => (
+                        <TableRow key={item.idSementara}>
+                          <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                          <TableCell>{item.jumlah}</TableCell>
+                          <TableCell>{item.stokbarang.satuan}</TableCell>
+                          <TableCell>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              onClick={() => handleDelete(item.idSementara)}
+                            >
+                              <Trash2 />
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
                 </div>
               </div>
             )}

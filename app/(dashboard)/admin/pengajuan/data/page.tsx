@@ -222,7 +222,7 @@ export default function DataPengajuanPage() {
       <div className="space-y-6">
         <div className="flex justify-between items-center gap-4 flex-wrap">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">
+            <h1 className="text-2xl font-bold text-foreground">
               Data Pengajuan Barang
             </h1>
             <p className="mt-2 text-sm text-muted-foreground">
@@ -301,9 +301,34 @@ export default function DataPengajuanPage() {
                   <p className="text-sm text-muted-foreground">Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355</p>
                 </div>
                 <div className="rounded-md border overflow-hidden">
-                <Table>
-                  <TableHeader>
-                    <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Status</TableHead> </TableRow> </TableHeader> <TableBody> {group.items.map((item, idx) => ( <TableRow key={item.idPengajuan}> <TableCell>{idx + 1}</TableCell> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.satuan}</TableCell> <TableCell>{formatRupiah(item.hargabarang)}</TableCell> <TableCell>{formatRupiah(item.total)}</TableCell> <TableCell>{getStatusBadge(item.status)}</TableCell> </TableRow> ))} </TableBody> </Table> </div> <div>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>No</TableHead>
+                        <TableHead>Nama Barang</TableHead>
+                        <TableHead>Jumlah</TableHead>
+                        <TableHead>Satuan</TableHead>
+                        <TableHead>Harga</TableHead>
+                        <TableHead>Total</TableHead>
+                        <TableHead>Status</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {group.items.map((item, idx) => (
+                        <TableRow key={item.idPengajuan}>
+                          <TableCell>{idx + 1}</TableCell>
+                          <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                          <TableCell>{item.jumlah}</TableCell>
+                          <TableCell>{item.satuan}</TableCell>
+                          <TableCell>{formatRupiah(item.hargabarang)}</TableCell>
+                          <TableCell>{formatRupiah(item.total)}</TableCell>
+                          <TableCell>{getStatusBadge(item.status)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+                <div>
                   <div className="flex justify-between font-semibold">
                     <span>Total Pengajuan:</span>
                     <span>

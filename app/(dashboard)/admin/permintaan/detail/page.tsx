@@ -206,7 +206,7 @@ export default function DetailPermintaanPage() {
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </Button>
-              <h1 className="text-3xl font-bold text-foreground">
+              <h1 className="text-2xl font-bold text-foreground">
                 Detail Permintaan Barang
               </h1>
             </div>
@@ -250,64 +250,71 @@ export default function DetailPermintaanPage() {
         ) : (
           <Card>
             <div className="rounded-md border overflow-hidden">
-            <Table>
-              <TableHeader>
-                <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Stok Tersedia</TableHead> <TableHead>Status</TableHead> <TableHead>Aksi</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {permintaan.map((item, index) => (
-                  <TableRow key={item.idPermintaan}> <TableCell>{index + 1}</TableCell> <TableCell>
-                      {item.stokbarang.namaBrg}
-                    </TableCell>
-                    <TableCell>{item.jumlah}</TableCell>
-                    <TableCell>{item.stokbarang.satuan}</TableCell>
-                    <TableCell
-                      className={
-                        item.stokbarang.sisa < item.jumlah
-                          ? "text-destructive font-semibold"
-                          : ""
-                      }
-                    >
-                      {item.stokbarang.sisa}
-                    </TableCell>
-                    <TableCell>
-                      <Badge variant="outline">Pending</Badge>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          size="sm"
-                          onClick={() => handleApproveClick(item)}
-                          disabled={
-                            processing !== null ||
-                            item.stokbarang.sisa < item.jumlah
-                          }
-                        >
-                          {processing === item.idPermintaan ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <Check className="h-4 w-4" />
-                          )}
-                        </Button>
-                        <Button
-                          size="sm"
-                          variant="destructive"
-                          onClick={() => handleRejectClick(item)}
-                          disabled={processing !== null}
-                        >
-                          {processing === item.idPermintaan ? (
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                          ) : (
-                            <X className="h-4 w-4" />
-                          )}
-                        </Button>
-                      </div>
-                    </TableCell>
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>No</TableHead>
+                    <TableHead>Nama Barang</TableHead>
+                    <TableHead>Jumlah</TableHead>
+                    <TableHead>Satuan</TableHead>
+                    <TableHead>Stok Tersedia</TableHead>
+                    <TableHead>Status</TableHead>
+                    <TableHead>Aksi</TableHead>
                   </TableRow>
-                ))}
-              </TableBody>
-            </Table>
+                </TableHeader>
+                <TableBody>
+                  {permintaan.map((item, index) => (
+                    <TableRow key={item.idPermintaan}>
+                      <TableCell>{index + 1}</TableCell>
+                      <TableCell>{item.stokbarang.namaBrg}</TableCell>
+                      <TableCell>{item.jumlah}</TableCell>
+                      <TableCell>{item.stokbarang.satuan}</TableCell>
+                      <TableCell
+                        className={
+                          item.stokbarang.sisa < item.jumlah
+                            ? "text-destructive font-semibold"
+                            : ""
+                        }
+                      >
+                        {item.stokbarang.sisa}
+                      </TableCell>
+                      <TableCell>
+                        <Badge variant="outline">Pending</Badge>
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            size="sm"
+                            onClick={() => handleApproveClick(item)}
+                            disabled={
+                              processing !== null ||
+                              item.stokbarang.sisa < item.jumlah
+                            }
+                          >
+                            {processing === item.idPermintaan ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Check className="h-4 w-4" />
+                            )}
+                          </Button>
+                          <Button
+                            size="sm"
+                            variant="destructive"
+                            onClick={() => handleRejectClick(item)}
+                            disabled={processing !== null}
+                          >
+                            {processing === item.idPermintaan ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <X className="h-4 w-4" />
+                            )}
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
             </div>
           </Card>
         )}

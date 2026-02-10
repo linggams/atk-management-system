@@ -63,7 +63,7 @@ export default function UsersPage() {
       <div className="space-y-6">
         <div className="flex justify-between items-center">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Data User</h1>
+            <h1 className="text-2xl font-bold text-foreground">Data User</h1>
             <p className="mt-2 text-sm text-muted-foreground">
               Kelola data pengguna sistem
             </p>

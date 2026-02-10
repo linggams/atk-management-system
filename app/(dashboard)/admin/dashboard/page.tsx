@@ -5,7 +5,7 @@ export default function AdminDashboardPage() {
     <DashboardLayout>
       <div className="space-y-6 flex flex-1 flex-col items-center justify-center text-center text-muted-foreground">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-foreground">Dashboard</h1>
           <p className="mt-2 text-sm text-muted-foreground">
             Selamat datang di dashboard Admin
           </p>

@@ -23,15 +23,27 @@ export function StokTable({ stokBarang, formatRupiah }: StokTableProps) {
         <div className="rounded-md border overflow-hidden">
           <Table>
             <TableHeader>
-              <TableRow> <TableHead>No</TableHead> <TableHead>Kode Barang</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Harga</TableHead> <TableHead>Satuan</TableHead> <TableHead>Stok</TableHead> <TableHead>Keluar</TableHead> <TableHead>Sisa</TableHead> </TableRow> </TableHeader> <TableBody> {stokBarang.length === 0 ? ( <TableRow> <TableCell colSpan={8}>
-                    Tidak ada data stok barang
-                  </TableCell>
+              <TableRow>
+                <TableHead>No</TableHead>
+                <TableHead>Kode Barang</TableHead>
+                <TableHead>Nama Barang</TableHead>
+                <TableHead>Harga</TableHead>
+                <TableHead>Satuan</TableHead>
+                <TableHead>Stok</TableHead>
+                <TableHead>Keluar</TableHead>
+                <TableHead>Sisa</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {stokBarang.length === 0 ? (
+                <TableRow>
+                  <TableCell colSpan={8}>Tidak ada data stok barang</TableCell>
                 </TableRow>
               ) : (
                 stokBarang.map((stok, index) => (
-                  <TableRow key={stok.idKodeBrg}> <TableCell>{index + 1}</TableCell> <TableCell>
-                      {stok.kodeBrg}
-                    </TableCell>
+                  <TableRow key={stok.idKodeBrg}>
+                    <TableCell>{index + 1}</TableCell>
+                    <TableCell>{stok.kodeBrg}</TableCell>
                     <TableCell>{stok.namaBrg}</TableCell>
                     <TableCell>{formatRupiah(stok.hargabarang)}</TableCell>
                     <TableCell>{stok.satuan}</TableCell>
