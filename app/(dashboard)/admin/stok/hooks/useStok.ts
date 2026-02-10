@@ -115,19 +115,24 @@ export function useStok() {
   }
 
   const downloadPDF = async () => {
+    const elementId = "pdf-stok-content"
+    const el = document.getElementById(elementId)
     try {
-      const elementId = "pdf-stok-content"
+      el?.classList.add("pdf-exporting")
+      await new Promise((r) => requestAnimationFrame(r))
       const jenisName = getJenisName(parseInt(jenisParam))
       const filename = `Laporan_Stok_${jenisName}_${new Date().toISOString().split("T")[0]}.pdf`
       await generatePDF(elementId, filename, {
         format: "a4",
-        orientation: "landscape",
+        orientation: "portrait",
         margin: 10,
       })
       toast.success("PDF berhasil diunduh")
     } catch (error) {
       console.error("Error generating PDF:", error)
       toast.error("Gagal mengunduh PDF")
+    } finally {
+      el?.classList.remove("pdf-exporting")
     }
   }
 

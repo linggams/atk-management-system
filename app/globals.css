@@ -122,3 +122,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* Sembunyikan kolom Aksi saat export PDF (stok) */
+#pdf-stok-content.pdf-exporting th:last-child,
+#pdf-stok-content.pdf-exporting td:last-child {
+  display: none !important;
+}
