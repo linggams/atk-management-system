@@ -34,26 +34,18 @@ export function UsersTable({ data, onEdit, onDelete }: UsersTableProps) {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableHead>No</TableHead>
-          <TableHead>Username</TableHead>
-          <TableHead>Level</TableHead>
-          <TableHead>Jabatan</TableHead>
-          <TableHead className="text-right">Aksi</TableHead>
+        <TableRow> <TableHead>No</TableHead> <TableHead>Username</TableHead> <TableHead>Level</TableHead> <TableHead>Jabatan</TableHead> <TableHead>Aksi</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.length === 0 ? (
-          <TableRow>
-            <TableCell colSpan={5} className="text-center py-8">
+          <TableRow> <TableCell colSpan={5}>
               Tidak ada data user
             </TableCell>
           </TableRow>
         ) : (
           data.map((user, index) => (
-            <TableRow key={user.idUser}>
-              <TableCell>{index + 1}</TableCell>
-              <TableCell className="font-medium">{user.username}</TableCell>
+            <TableRow key={user.idUser}> <TableCell>{index + 1}</TableCell> <TableCell>{user.username}</TableCell>
               <TableCell>
                 <Badge variant={user.level === "admin" ? "default" : "secondary"}>
                   {getLevelLabel(user.level)}

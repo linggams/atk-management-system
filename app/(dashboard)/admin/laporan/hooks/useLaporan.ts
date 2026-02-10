@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react"
 import { toast } from "sonner"
-import { generatePDF } from "@/lib/pdf-utils"
+import { downloadPdf } from "@/lib/makepdf"
 import { formatDate, formatRupiah } from "../utils"
 import type { LaporanFilters, LaporanSummary } from "../types"
 
@@ -128,43 +128,65 @@ export function useLaporan() {
 
   const handleExport = useCallback(async () => {
     try {
-      const elementId = `pdf-laporan-${activeTab}-${Date.now()}`
-      const existingElement = document.getElementById(elementId)
-      if (existingElement) existingElement.remove()
-
       const headers = getHeaders(activeTab)
-      const kopHtml = `
-        <div style="text-align: center; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #000;">
-          <h2 style="font-size: 18px; font-weight: bold; margin: 0;">PT DASAN PAN PACIFIC INDONESIA</h2>
-          <p style="font-size: 12px; margin: 4px 0 0 0;">Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355</p>
-          <p style="font-size: 14px; font-weight: bold; margin: 12px 0 0 0;">Laporan ${activeTab}</p>
-        </div>
-      `
       const tableRows = data.map((item) => getRowData(item, activeTab))
-      const thCells = headers
-        .map((h) => `<th style="border: 1px solid #000; padding: 6px; text-align: left; background-color: #f0f0f0;">${h}</th>`)
-        .join("")
-      const trRows = tableRows
-        .map(
-          (row) =>
-            `<tr>${row.map((cell) => `<td style="border: 1px solid #000; padding: 6px;">${cell}</td>`).join("")}</tr>`
-        )
-        .join("")
-      const tableHtml = `
-        <table style="width: 100%; border-collapse: collapse; font-size: 11px;">
-          <thead><tr>${thCells}</tr></thead>
-          <tbody>${trRows}</tbody>
-        </table>
-      `
-      const pdfElement = document.createElement("div")
-      pdfElement.id = elementId
-      pdfElement.style.cssText = "position: fixed; left: -9999px; top: 0; background: white;"
-      pdfElement.innerHTML = `<div style="padding: 20px; font-family: Arial, sans-serif; min-width: 800px;">${kopHtml}${tableHtml}</div>`
-      document.body.appendChild(pdfElement)
 
       const filename = `laporan-${activeTab}-${new Date().toISOString().split("T")[0]}.pdf`
-      await generatePDF(elementId, filename, { format: "a4", orientation: "landscape", margin: 10 })
-      document.body.removeChild(pdfElement)
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const body: any[] = [
+        headers.map((h) => ({ text: h, style: "tableHeader" })),
+        ...tableRows.map((row) => row.map((cell) => ({ text: cell, style: "tableCell" }))),
+      ]
+
+      // Lebar kolom menyesuaikan jenis laporan (default: rata)
+      const widthsByTab: Record<string, any[]> = {
+        permintaan: ["auto", "auto", "*", "auto", "auto", "auto"],
+        pengajuan: ["auto", "auto", "*", "auto", "auto", "auto", "auto", "auto"],
+        pemasukan: ["auto", "auto", "*", "auto", "auto"],
+        pengeluaran: ["auto", "auto", "*", "auto", "auto"],
+        stok: ["auto", "*", "auto", "auto", "auto", "auto"],
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const docDefinition: any = {
+        pageSize: "A4",
+        // Tetap landscape seperti sebelumnya agar kolom banyak tetap terbaca
+        pageOrientation: "landscape",
+        pageMargins: [30, 50, 30, 30],
+        content: [
+          { text: "PT DASAN PAN PACIFIC INDONESIA", style: "header", alignment: "center" },
+          {
+            text: "Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355",
+            style: "subheader",
+            alignment: "center",
+            margin: [0, 4, 0, 8],
+          },
+          {
+            canvas: [{ type: "line", x1: 0, y1: 0, x2: 760, y2: 0, lineWidth: 1 }],
+            margin: [0, 0, 0, 10],
+          },
+          { text: `LAPORAN ${String(activeTab).toUpperCase()}`, style: "title", alignment: "center", margin: [0, 0, 0, 14] },
+          {
+            table: {
+              headerRows: 1,
+              widths: widthsByTab[activeTab] || new Array(headers.length).fill("*"),
+              body,
+            },
+            layout: "lightHorizontalLines",
+          },
+        ],
+        styles: {
+          header: { fontSize: 14, bold: true },
+          subheader: { fontSize: 9 },
+          title: { fontSize: 12, bold: true },
+          tableHeader: { bold: true, fontSize: 9, fillColor: "#f3f4f6", alignment: "center" },
+          tableCell: { fontSize: 9 },
+        },
+        defaultStyle: { fontSize: 9 },
+      }
+
+      downloadPdf(docDefinition, filename)
       toast.success("PDF berhasil diunduh")
     } catch {
       toast.error("Gagal mengunduh PDF")

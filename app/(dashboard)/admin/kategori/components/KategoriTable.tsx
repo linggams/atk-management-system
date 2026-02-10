@@ -21,23 +21,18 @@ export function KategoriTable({ data, onDelete }: KategoriTableProps) {
   return (
     <Table>
       <TableHeader>
-        <TableRow>
-          <TableHead>ID Kategori</TableHead>
-          <TableHead>Nama Kategori</TableHead>
-          <TableHead className="text-right">Aksi</TableHead>
+        <TableRow> <TableHead>ID Kategori</TableHead> <TableHead>Nama Kategori</TableHead> <TableHead>Aksi</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {data.length === 0 ? (
-          <TableRow>
-            <TableCell colSpan={3} className="text-center py-8 text-muted-foreground">
+          <TableRow> <TableCell colSpan={3}>
               Tidak ada data kategori
             </TableCell>
           </TableRow>
         ) : (
           data.map((item) => (
-            <TableRow key={item.idJenis}>
-              <TableCell className="font-medium">{item.idJenis}</TableCell>
+            <TableRow key={item.idJenis}> <TableCell>{item.idJenis}</TableCell>
               <TableCell>{item.jenisBrg}</TableCell>
               <TableCell className="text-right">
                 <Button

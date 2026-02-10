@@ -252,21 +252,12 @@ export default function DetailPermintaanPage() {
             <div className="rounded-md border overflow-hidden">
             <Table>
               <TableHeader>
-                <TableRow>
-                  <TableHead>No</TableHead>
-                  <TableHead>Nama Barang</TableHead>
-                  <TableHead>Jumlah</TableHead>
-                  <TableHead>Satuan</TableHead>
-                  <TableHead>Stok Tersedia</TableHead>
-                  <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Aksi</TableHead>
+                <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Stok Tersedia</TableHead> <TableHead>Status</TableHead> <TableHead>Aksi</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {permintaan.map((item, index) => (
-                  <TableRow key={item.idPermintaan}>
-                    <TableCell>{index + 1}</TableCell>
-                    <TableCell className="font-medium">
+                  <TableRow key={item.idPermintaan}> <TableCell>{index + 1}</TableCell> <TableCell>
                       {item.stokbarang.namaBrg}
                     </TableCell>
                     <TableCell>{item.jumlah}</TableCell>

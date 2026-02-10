@@ -20,7 +20,7 @@ import { toast } from "sonner"
 import { format } from "date-fns"
 import { id } from "date-fns/locale"
 import Link from "next/link"
-import { generatePDF } from "@/lib/pdf-utils"
+import { downloadPdf } from "@/lib/makepdf"
 
 interface Pengajuan {
   idPengajuan: number
@@ -110,74 +110,92 @@ export default function DataPengajuanPage() {
         return
       }
 
-      // Create a temporary element for PDF generation
-      const elementId = `pdf-pengajuan-${unit}-${tglPengajuan.split("T")[0]}`
-      const existingElement = document.getElementById(elementId)
-      if (existingElement) {
-        existingElement.remove()
+      const filename = `Pengajuan_${unit}_${tglPengajuan.split("T")[0]}.pdf`
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const body: any[] = [
+        [
+          { text: "No.", style: "tableHeader" },
+          { text: "Kode Barang", style: "tableHeader" },
+          { text: "Nama Barang", style: "tableHeader" },
+          { text: "Satuan", style: "tableHeader" },
+          { text: "Jumlah", style: "tableHeader" },
+          { text: "Harga Barang", style: "tableHeader" },
+          { text: "Total", style: "tableHeader" },
+        ],
+        ...data.map((item: Pengajuan, index: number) => [
+          { text: String(index + 1), alignment: "center" },
+          { text: item.kodeBrg, alignment: "center" },
+          { text: item.stokbarang.namaBrg },
+          { text: item.satuan, alignment: "center" },
+          { text: String(item.jumlah), alignment: "center" },
+          { text: formatRupiah(item.hargabarang), alignment: "right" },
+          { text: formatRupiah(item.total), alignment: "right" },
+        ]),
+      ]
+
+      const subtotalJumlah = data.reduce((sum: number, item: Pengajuan) => sum + item.jumlah, 0)
+      const subtotalHarga = data.reduce((sum: number, item: Pengajuan) => sum + item.hargabarang, 0)
+      const subtotalTotal = data.reduce((sum: number, item: Pengajuan) => sum + item.total, 0)
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const docDefinition: any = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [40, 60, 40, 40],
+        content: [
+          { text: "PT DASAN PAN PACIFIC INDONESIA", style: "header", alignment: "center" },
+          {
+            text: "Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355",
+            style: "subheader",
+            alignment: "center",
+            margin: [0, 4, 0, 8],
+          },
+          {
+            canvas: [{ type: "line", x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+            margin: [0, 0, 0, 8],
+          },
+          { text: "FORM PENGAJUAN BARANG", style: "title", alignment: "center", decoration: "underline", margin: [0, 0, 0, 10] },
+          { text: "Permintaan Pembelian Barang", style: "meta" },
+          { text: [{ text: "Pada Tanggal : ", style: "meta" }, { text: formatDate(tglPengajuan), style: "metaBold" }], margin: [0, 0, 0, 10] },
+          {
+            table: {
+              headerRows: 1,
+              widths: ["auto", "auto", "*", "auto", "auto", "auto", "auto"],
+              body,
+            },
+            layout: "lightHorizontalLines",
+          },
+          {
+            table: {
+              headerRows: 0,
+              widths: ["*", "auto", "auto", "auto"],
+              body: [
+                [
+                  { text: "Sub Total", style: "subtotalLabel", alignment: "center" },
+                  { text: String(subtotalJumlah), style: "subtotalValue", alignment: "center" },
+                  { text: formatRupiah(subtotalHarga), style: "subtotalValue", alignment: "center" },
+                  { text: formatRupiah(subtotalTotal), style: "subtotalValue", alignment: "center" },
+                ],
+              ],
+            },
+            margin: [0, 10, 0, 0],
+          },
+        ],
+        styles: {
+          header: { fontSize: 14, bold: true },
+          subheader: { fontSize: 9 },
+          title: { fontSize: 12, bold: true },
+          meta: { fontSize: 10 },
+          metaBold: { fontSize: 10, bold: true },
+          tableHeader: { bold: true, fontSize: 9, fillColor: "#f3f4f6", alignment: "center" },
+          subtotalLabel: { bold: true, fillColor: "#f3f4f6", fontSize: 10 },
+          subtotalValue: { bold: true, fontSize: 10 },
+        },
+        defaultStyle: { fontSize: 9 },
       }
 
-      const pdfElement = document.createElement("div")
-      pdfElement.id = elementId
-      pdfElement.className = "hidden"
-      pdfElement.innerHTML = `
-        <div style="padding: 20px; font-family: Arial, sans-serif;">
-          <div style="text-align: center; margin-bottom: 20px;">
-            <h2 style="font-size: 18px; font-weight: bold;">PT DASAN PAN PACIFIC INDONESIA</h2>
-            <p style="font-size: 12px;">Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355</p>
-            <hr style="margin: 10px 0;">
-            <h3 style="font-size: 16px; font-weight: bold; text-decoration: underline;">FORM PENGAJUAN BARANG</h3>
-          </div>
-          <div style="margin-bottom: 10px;">
-            <p style="font-size: 12px;">Permintaan Pembelian Barang</p>
-            <p style="font-size: 12px;">Pada Tanggal : <b>${formatDate(tglPengajuan)}</b></p>
-          </div>
-          <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 11px;">
-            <thead>
-              <tr style="background-color: #f0f0f0;">
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">No.</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Kode Barang</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Nama Barang</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Satuan</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Jumlah</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Harga Barang</th>
-                <th style="border: 1px solid #000; padding: 5px; text-align: center;">Total</th>
-              </tr>
-            </thead>
-            <tbody>
-              ${data.map((item: Pengajuan, index: number) => `
-                <tr>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${index + 1}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.kodeBrg}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: left;">${item.stokbarang.namaBrg}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.satuan}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${item.jumlah}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${formatRupiah(item.hargabarang)}</td>
-                  <td style="border: 1px solid #000; padding: 5px; text-align: center;">${formatRupiah(item.total)}</td>
-                </tr>
-              `).join("")}
-            </tbody>
-          </table>
-          <table style="width: 100%; border-collapse: collapse; border: 1px solid #000; font-size: 11px; margin-top: 10px;">
-            <tr>
-              <td style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold;">Sub Total</td>
-              <td style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold;">${data.reduce((sum: number, item: Pengajuan) => sum + item.jumlah, 0)}</td>
-              <td style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold;">${formatRupiah(data.reduce((sum: number, item: Pengajuan) => sum + item.hargabarang, 0))}</td>
-              <td style="border: 1px solid #000; padding: 5px; text-align: center; font-weight: bold;">${formatRupiah(data.reduce((sum: number, item: Pengajuan) => sum + item.total, 0))}</td>
-            </tr>
-          </table>
-        </div>
-      `
-      document.body.appendChild(pdfElement)
-
-      const filename = `Pengajuan_${unit}_${tglPengajuan.split("T")[0]}.pdf`
-      await generatePDF(elementId, filename, {
-        format: "a4",
-        orientation: "portrait",
-        margin: 10,
-      })
-
-      document.body.removeChild(pdfElement)
+      downloadPdf(docDefinition, filename)
       toast.success("PDF berhasil diunduh")
     } catch (error) {
       console.error("Error generating PDF:", error)
@@ -285,32 +303,7 @@ export default function DataPengajuanPage() {
                 <div className="rounded-md border overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>No</TableHead>
-                      <TableHead>Nama Barang</TableHead>
-                      <TableHead>Jumlah</TableHead>
-                      <TableHead>Satuan</TableHead>
-                      <TableHead>Harga</TableHead>
-                      <TableHead>Total</TableHead>
-                      <TableHead>Status</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {group.items.map((item, idx) => (
-                      <TableRow key={item.idPengajuan}>
-                        <TableCell>{idx + 1}</TableCell>
-                        <TableCell>{item.stokbarang.namaBrg}</TableCell>
-                        <TableCell>{item.jumlah}</TableCell>
-                        <TableCell>{item.satuan}</TableCell>
-                        <TableCell>{formatRupiah(item.hargabarang)}</TableCell>
-                        <TableCell>{formatRupiah(item.total)}</TableCell>
-                        <TableCell>{getStatusBadge(item.status)}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-                </div>
-                <div className="mt-4 p-4 bg-muted rounded-md">
+                    <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Status</TableHead> </TableRow> </TableHeader> <TableBody> {group.items.map((item, idx) => ( <TableRow key={item.idPengajuan}> <TableCell>{idx + 1}</TableCell> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.satuan}</TableCell> <TableCell>{formatRupiah(item.hargabarang)}</TableCell> <TableCell>{formatRupiah(item.total)}</TableCell> <TableCell>{getStatusBadge(item.status)}</TableCell> </TableRow> ))} </TableBody> </Table> </div> <div>
                   <div className="flex justify-between font-semibold">
                     <span>Total Pengajuan:</span>
                     <span>

@@ -372,26 +372,7 @@ export default function PermintaanPage() {
                 <div className="rounded-md border overflow-hidden">
                 <Table>
                   <TableHeader>
-                    <TableRow>
-                      <TableHead>Nama Barang</TableHead>
-                      <TableHead>Jumlah</TableHead>
-                      <TableHead>Satuan</TableHead>
-                      <TableHead>Aksi</TableHead>
-                    </TableRow>
-                  </TableHeader>
-                  <TableBody>
-                    {sementaraList.map((item) => (
-                      <TableRow key={item.idSementara}>
-                        <TableCell>{item.stokbarang.namaBrg}</TableCell>
-                        <TableCell>{item.jumlah}</TableCell>
-                        <TableCell>{item.stokbarang.satuan}</TableCell>
-                        <TableCell>
-                          <Button
-                            variant="ghost"
-                            size="icon"
-                            onClick={() => handleDelete(item.idSementara)}
-                          >
-                            <Trash2 className="h-4 w-4 text-destructive" />
+                    <TableRow> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Aksi</TableHead> </TableRow> </TableHeader> <TableBody> {sementaraList.map((item) => ( <TableRow key={item.idSementara}> <TableCell>{item.stokbarang.namaBrg}</TableCell> <TableCell>{item.jumlah}</TableCell> <TableCell>{item.stokbarang.satuan}</TableCell> <TableCell> <Button variant="ghost" size="icon" onClick={() => handleDelete(item.idSementara)} > <Trash2 />
                           </Button>
                         </TableCell>
                       </TableRow>

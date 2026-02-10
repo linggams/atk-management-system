@@ -253,22 +253,12 @@ export default function DetailPengajuanPage() {
               <div className="rounded-md border overflow-hidden">
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>No</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Jumlah</TableHead>
-                    <TableHead>Satuan</TableHead>
-                    <TableHead>Harga</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead className="text-right">Aksi</TableHead>
+                  <TableRow> <TableHead>No</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Status</TableHead> <TableHead>Aksi</TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {pengajuan.map((item, index) => (
-                    <TableRow key={item.idPengajuan}>
-                      <TableCell>{index + 1}</TableCell>
-                      <TableCell className="font-medium">
+                    <TableRow key={item.idPengajuan}> <TableCell>{index + 1}</TableCell> <TableCell>
                         {item.stokbarang.namaBrg}
                       </TableCell>
                       <TableCell>{item.jumlah}</TableCell>

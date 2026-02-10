@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { useSearchParams } from "next/navigation"
 import { toast } from "sonner"
-import { generatePDF } from "@/lib/pdf-utils"
+import { downloadPdf } from "@/lib/makepdf"
 import type { StokBarang, JenisBarang, StokFormData } from "../types"
 
 export function useStok() {
@@ -115,33 +115,110 @@ export function useStok() {
   }
 
   const downloadPDF = async () => {
-    // Sembunyikan elemen yang tidak perlu di PDF (kolom Aksi) dengan class pdf-hidden
-    let pdfStyle: HTMLStyleElement | null = null
     try {
-      pdfStyle = document.createElement("style")
-      pdfStyle.id = "pdf-hidden-style"
-      pdfStyle.textContent = ".pdf-hidden{display:none !important;}"
-      document.head.appendChild(pdfStyle)
+      if (!stokBarang.length) {
+        toast.error("Tidak ada data untuk diexport")
+        return
+      }
 
-      const elementId = "pdf-stok-content"
       const jenisName = getJenisName(parseInt(jenisParam))
-      const filename = `Laporan_Stok_${jenisName}_${new Date()
-        .toISOString()
-        .split("T")[0]}.pdf`
+      const today = new Date().toISOString().split("T")[0]
+      const filename = `Laporan_Stok_${jenisName}_${today}.pdf`
 
-      await generatePDF(elementId, filename, {
-        format: "a4",
-        orientation: "portrait",
-        margin: 10,
-      })
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const body: any[] = [
+        [
+          { text: "No", style: "tableHeader" },
+          { text: "Kode Barang", style: "tableHeader" },
+          { text: "Nama Barang", style: "tableHeader" },
+          { text: "Harga", style: "tableHeader" },
+          { text: "Satuan", style: "tableHeader" },
+          { text: "Stok", style: "tableHeader" },
+          { text: "Keluar", style: "tableHeader" },
+          { text: "Sisa", style: "tableHeader" },
+        ],
+        ...stokBarang.map((item, index) => [
+          { text: String(index + 1), alignment: "center" },
+          { text: item.kodeBrg },
+          { text: item.namaBrg },
+          { text: item.hargabarang.toString(), alignment: "right" },
+          { text: item.satuan, alignment: "center" },
+          { text: String(item.stok), alignment: "right" },
+          { text: String(item.keluar), alignment: "right" },
+          {
+            text: String(item.sisa),
+            alignment: "right",
+            color: item.sisa < 0 ? "red" : item.sisa === 0 ? "#b45309" : undefined,
+            bold: item.sisa <= 0,
+          },
+        ]),
+      ]
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const docDefinition: any = {
+        pageSize: "A4",
+        pageOrientation: "portrait",
+        pageMargins: [40, 60, 40, 40],
+        content: [
+          {
+            text: "PT DASAN PAN PACIFIC INDONESIA",
+            style: "header",
+            alignment: "center",
+          },
+          {
+            text: "Parakansalak, Bojonglongok, Kec. Parakansalak, Kabupaten Sukabumi, Jawa Barat 43355",
+            style: "subheader",
+            alignment: "center",
+            margin: [0, 4, 0, 8],
+          },
+          {
+            canvas: [{ type: "line", x1: 0, y1: 0, x2: 515, y2: 0, lineWidth: 1 }],
+            margin: [0, 0, 0, 8],
+          },
+          {
+            text: `LAPORAN DATA STOK BARANG ${jenisName.toUpperCase()}`,
+            style: "title",
+            alignment: "center",
+            margin: [0, 0, 0, 16],
+          },
+          {
+            table: {
+              headerRows: 1,
+              widths: ["auto", "auto", "*", "auto", "auto", "auto", "auto", "auto"],
+              body,
+            },
+            layout: "lightHorizontalLines",
+          },
+        ],
+        styles: {
+          header: {
+            fontSize: 14,
+            bold: true,
+          },
+          subheader: {
+            fontSize: 9,
+          },
+          title: {
+            fontSize: 12,
+            bold: true,
+          },
+          tableHeader: {
+            bold: true,
+            fontSize: 9,
+            fillColor: "#f3f4f6",
+            alignment: "center",
+          },
+        },
+        defaultStyle: {
+          fontSize: 9,
+        },
+      }
+
+      downloadPdf(docDefinition, filename)
       toast.success("PDF berhasil diunduh")
     } catch (error) {
-      console.error("Error generating PDF:", error)
+      console.error("Error generating PDF dengan pdfmake:", error)
       toast.error("Gagal mengunduh PDF")
-    } finally {
-      if (pdfStyle && document.head.contains(pdfStyle)) {
-        document.head.removeChild(pdfStyle)
-      }
     }
   }
 

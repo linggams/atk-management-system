@@ -69,19 +69,7 @@ export default function LaporanPage() {
             >
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Tanggal</TableHead>
-                    <TableHead>Unit</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Jumlah</TableHead>
-                    <TableHead>Satuan</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item: Record<string, unknown>) => (
-                    <TableRow key={Number(item.idPermintaan)}>
-                      <TableCell className="text-muted-foreground">{formatDate(String(item.tglPermintaan ?? ""))}</TableCell>
+                  <TableRow> <TableHead>Tanggal</TableHead> <TableHead>Unit</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Status</TableHead> </TableRow> </TableHeader> <TableBody> {data.map((item: Record<string, unknown>) => ( <TableRow key={Number(item.idPermintaan)}> <TableCell>{formatDate(String(item.tglPermintaan ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>
                       <TableCell>{String(item.jumlah)}</TableCell>
@@ -103,21 +91,7 @@ export default function LaporanPage() {
             >
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Tanggal</TableHead>
-                    <TableHead>Unit</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Jumlah</TableHead>
-                    <TableHead>Satuan</TableHead>
-                    <TableHead>Harga</TableHead>
-                    <TableHead>Total</TableHead>
-                    <TableHead>Status</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item: Record<string, unknown>) => (
-                    <TableRow key={Number(item.idPengajuan)}>
-                      <TableCell className="text-muted-foreground">{formatDate(String(item.tglPengajuan ?? ""))}</TableCell>
+                  <TableRow> <TableHead>Tanggal</TableHead> <TableHead>Unit</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> <TableHead>Harga</TableHead> <TableHead>Total</TableHead> <TableHead>Status</TableHead> </TableRow> </TableHeader> <TableBody> {data.map((item: Record<string, unknown>) => ( <TableRow key={Number(item.idPengajuan)}> <TableCell>{formatDate(String(item.tglPengajuan ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>
                       <TableCell>{String(item.jumlah)}</TableCell>
@@ -141,18 +115,7 @@ export default function LaporanPage() {
             >
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Tanggal</TableHead>
-                    <TableHead>Unit</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Jumlah</TableHead>
-                    <TableHead>Satuan</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item: Record<string, unknown>, index: number) => (
-                    <TableRow key={`pemasukan-${index}`}>
-                      <TableCell className="text-muted-foreground">{formatDate(String(item.tglMasuk ?? ""))}</TableCell>
+                  <TableRow> <TableHead>Tanggal</TableHead> <TableHead>Unit</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> </TableRow> </TableHeader> <TableBody> {data.map((item: Record<string, unknown>, index: number) => ( <TableRow key={`pemasukan-${index}`}> <TableCell>{formatDate(String(item.tglMasuk ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>
                       <TableCell>{String(item.jumlah)}</TableCell>
@@ -173,18 +136,7 @@ export default function LaporanPage() {
             >
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Tanggal</TableHead>
-                    <TableHead>Unit</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Jumlah</TableHead>
-                    <TableHead>Satuan</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item: Record<string, unknown>, index: number) => (
-                    <TableRow key={`pengeluaran-${index}`}>
-                      <TableCell className="text-muted-foreground">{formatDate(String(item.tglKeluar ?? ""))}</TableCell>
+                  <TableRow> <TableHead>Tanggal</TableHead> <TableHead>Unit</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Jumlah</TableHead> <TableHead>Satuan</TableHead> </TableRow> </TableHeader> <TableBody> {data.map((item: Record<string, unknown>, index: number) => ( <TableRow key={`pengeluaran-${index}`}> <TableCell>{formatDate(String(item.tglKeluar ?? ""))}</TableCell>
                       <TableCell className="font-medium">{String(item.unit)}</TableCell>
                       <TableCell>{(item.stokbarang as { namaBrg?: string })?.namaBrg ?? ""}</TableCell>
                       <TableCell>{String(item.jumlah)}</TableCell>
@@ -205,19 +157,7 @@ export default function LaporanPage() {
             >
               <Table>
                 <TableHeader>
-                  <TableRow>
-                    <TableHead>Kode Barang</TableHead>
-                    <TableHead>Nama Barang</TableHead>
-                    <TableHead>Stok</TableHead>
-                    <TableHead>Keluar</TableHead>
-                    <TableHead>Sisa</TableHead>
-                    <TableHead>Satuan</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {data.map((item: Record<string, unknown>) => (
-                    <TableRow key={Number(item.idKodeBrg)}>
-                      <TableCell className="font-mono text-sm">{String(item.kodeBrg)}</TableCell>
+                  <TableRow> <TableHead>Kode Barang</TableHead> <TableHead>Nama Barang</TableHead> <TableHead>Stok</TableHead> <TableHead>Keluar</TableHead> <TableHead>Sisa</TableHead> <TableHead>Satuan</TableHead> </TableRow> </TableHeader> <TableBody> {data.map((item: Record<string, unknown>) => ( <TableRow key={Number(item.idKodeBrg)}> <TableCell>{String(item.kodeBrg)}</TableCell>
                       <TableCell className="font-medium">{String(item.namaBrg)}</TableCell>
                       <TableCell>{String(item.stok)}</TableCell>
                       <TableCell>{String(item.keluar)}</TableCell>
