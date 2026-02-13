@@ -197,9 +197,9 @@ export function AppSidebar({ userLevel }: SidebarProps) {
           <h1 className="text-xl font-bold text-foreground">PT DASAN</h1>
         </div>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="gap-0.5">
         {menuItems.map((item, index) => (
-          <SidebarGroup key={item.href + index}>
+          <SidebarGroup key={item.href + index} className="py-0.5 px-2">
             {item.children ? (
               <>
                 <SidebarGroupLabel>{item.title}</SidebarGroupLabel>
